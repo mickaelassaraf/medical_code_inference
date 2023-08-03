@@ -1,20 +1,20 @@
 ## Run experiment on kubeflow
 
 # open a terminal
-git clone https://github.com/mickaelqantev/preprocess_mimic_update
-pyenv install 3.10
-pyenv virtualenv 3.10.11  py310 
+`git clone https://github.com/mickaelqantev/preprocess_mimic_update`
+`pyenv install 3.10 `
+`pyenv virtualenv 3.10.11  py310`
 # open a new terminal
-pip install —user ipykernel
-python -m ipykernel install --user --name=py310
-pyenv activate py310
-pip install hydra
-pip install hydra-core
-pip install wandb
-pip install wget
-pip install omegaconf
-pip install vaex
-pip install -r requirements.txt
+`pip install —user ipykernel `
+`python -m ipykernel install --user --name=py310 `
+`pyenv activate py310`
+`pip install hydra`
+`pip install hydra-core`
+`pip install wandb`
+`pip install wget`
+`pip install omegaconf`
+`pip install vaex`
+`pip install -r requirements.txt`
 
 # copy the weight of Roberta
 
