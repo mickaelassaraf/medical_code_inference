@@ -20,10 +20,10 @@ from torch import nn
 
 from transformers import RobertaModel, AutoConfig
 
-from src.models.modules.attention import LabelAttentionHierarchicalCPT
+from src.models.modules.attention import LabelAttentionHierarchicalICD
 
 
-class PLMCPT_HIERARCHICAL(nn.Module):
+class PLMICD_HIERARCHICAL(nn.Module):
     def __init__(self, num_classes: int, model_path: str,permutation_matrices, **kwargs):
         super().__init__()
         self.config = AutoConfig.from_pretrained(
@@ -33,7 +33,7 @@ class PLMCPT_HIERARCHICAL(nn.Module):
             self.config, add_pooling_layer=False
         ).from_pretrained(model_path, config=self.config)
         
-        self.attention = LabelAttentionHierarchicalCPT(
+        self.attention = LabelAttentionHierarchicalICD(
             input_size=self.config.hidden_size,
             projection_size=self.config.hidden_size,
             num_classes=num_classes,

@@ -2,11 +2,11 @@ import logging
 import math
 import os
 from pathlib import Path
-from src.models.plm_cpt_hierarchical_embedding import PLMCPT_HIERARCHICAL
+from src.models.plm_icd_heriarchical_embedding import PLMICD_HIERARCHICAL
 import hydra
 from omegaconf import OmegaConf
 from rich.pretty import pprint
-from src.utils.preprocess_permutation import create_permutations_cpt
+from src.utils.preprocess_permutation import create_permutations_icd
 from src.data.data_pipeline import data_pipeline
 from src.factories import (
     get_callbacks,
@@ -16,7 +16,7 @@ from src.factories import (
     get_lr_scheduler,
     get_metric_collections,
     get_model,
-    get_optimizer,
+    get_optimizer,        
     get_text_encoder,
     get_transform,
 )
@@ -88,10 +88,10 @@ def main(cfg: OmegaConf) -> None:
         label_transform=label_transform,
         text_transform=text_transform,
     )
-    permutation_matrices = create_permutations_cpt(label_transform,device)
+    permutation_matrices = create_permutations_icd(label_transform,device)
     config=cfg.model
     data_info = lookups.data_info
-    model = PLMCPT_HIERARCHICAL(text_encoder=text_encoder,permutation_matrices=permutation_matrices, **data_info, **config.configs)
+    model = PLMICD_HIERARCHICAL(text_encoder=text_encoder,permutation_matrices=permutation_matrices, **data_info, **config.configs)
 
     model.to(device)
 
