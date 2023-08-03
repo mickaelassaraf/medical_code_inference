@@ -1,10 +1,10 @@
-## Run experiment on kubeflow
+# Run experiment on kubeflow
 
-# open a terminal
+## open a terminal
 `git clone https://github.com/mickaelqantev/preprocess_mimic_update`
 `pyenv install 3.10 `
 `pyenv virtualenv 3.10.11  py310`
-# open a new terminal
+## open a new terminal
 `pip install —user ipykernel `
 `python -m ipykernel install --user --name=py310 `
 `pyenv activate py310`
@@ -16,24 +16,24 @@
 `pip install vaex`
 `pip install -r requirements.txt`
 
-# copy the weight of Roberta
+## copy the weight of Roberta
 
 The weight can be find in the qantev drive in Qantev Shared/Tech/ML models/PLM_ICD and you need to extract it in the folder preprocess_mimic_update
 
 
-# Preprocessing MIMIC III (OPTIONAL)
+## Preprocessing MIMIC III (OPTIONAL)
 
 you can copy the mimic dataset from Qantev Shared/Tech/MIMIC/mimic-iii-clinical-database-1.4.zip and extract in the folder preprocess_mimic_update/MIMIC and then start the script prepare_mimic_cpt for cpt or prepare_mimiciii_clean for icd.
 
-# Use directly the dataset already preprocessed
+## Use directly the dataset already preprocessed
 
 you should copy the preprocessed dataset from Qantev Shared/Tech/MIMIC/mimiciii_clean.feather (for icd dataset) or from Qantev Shared/Tech/MIMIC/mimiciii_clean_cpt.feather (for cpt dataset) in preprocess_mimic_update/data/mimiciii_clean
 
 
-# (OPTIONAL) To access the result you can create a wandb account and then login with your api key
+## (OPTIONAL) To access the result you can create a wandb account and then login with your api key
 
 
-# Run Training 
+## Run Training 
 
 To train the model you should run
 
@@ -45,7 +45,7 @@ To train the model you should run
 
 `python main_cpt_hierachical.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0` for plm cpt hierachical
 
-# Evaluation
+## Evaluation
 
 some checkpoint for the models are available in Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints
 
@@ -58,7 +58,7 @@ Evaluate PLM-ICD on MIMIC-IV ICD-10 on GPU 0: `python main.py experiment=mimiciv
 Evaluate PLM-CPT hierarchical on MIMIC-III clean on GPU 0: `python main_cpt_hierachical experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0 load_model=path/to/model_checkpoints/mimiciii_clean/plm_cpt_hierarchical epochs=0`
 
 
-## Readme from the original github
+# Readme from the original github
 
 # ⚕️Automated Medical Coding on MIMIC-III and MIMIC-IV: A Critical Review and Replicability Study
 
