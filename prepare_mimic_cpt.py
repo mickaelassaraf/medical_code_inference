@@ -33,6 +33,7 @@ CODE_SYSTEMS = [
     ,
 ]
 MIN_TARGET_COUNT = 10  # Minimum number of times a code must appear to be included
+
 preprocessor = TextPreprocessor(
     lower=True,
     remove_special_characters_mullenbach=True,
