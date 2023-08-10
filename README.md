@@ -1,9 +1,20 @@
-# Run experiment on kubeflow
+# Run experiment on Kubeflow
 
-## open a terminal
-`git clone https://github.com/mickaelqantev/preprocess_mimic_update`
-`pyenv install 3.10 `
-`pyenv virtualenv 3.10.11  py310`
+## Configure virtual env
+Open a terminal in kubeflow and execute the following lines in it. 
+Make sure you are in the right location and run: \
+
+```console
+`git clone https://github.com/mickaelqantev/preprocess_mimic_update` 
+```
+
+Make sure `pyenv` is installed (see Engineering wiki [here](https://www.notion.so/qantev/Manage-Python-versions-c0083f5a47e54c2788734adef5c2f296)  or [official](https://github.com/pyenv/pyenv#getting-pyenv)  documentations to do so) and run: \
+
+```console
+pyenv install 3.10 
+pyenv virtualenv 3.10.11  py310
+```
+
 ## open a new terminal
 `pip install —user ipykernel `
 `python -m ipykernel install --user --name=py310 `
