@@ -2,24 +2,22 @@
 
 
 ## Create virtual env
-Open a terminal in kubeflow and execute the following lines in it. 
+Open a terminal in Kubeflow and execute the following lines in it. 
 Make sure you are in the right location and run: 
 
 ```console
-git clone https://github.com/mickaelqantev/preprocess_mimic_update
+git clone git@github.com:mickaelassaraf/medical_code_inference.git
 ```
 
 Make sure `pyenv` is installed 
-(see Engineering wiki [here](https://www.notion.so/qantev/Manage-Python-versions-c0083f5a47e54c2788734adef5c2f296) 
-or [official](https://github.com/pyenv/pyenv#getting-pyenv)  
-documentations to do so) and run: 
+(see Engineering wiki [here](https://www.notion.so/qantev/Manage-Python-versions-c0083f5a47e54c2788734adef5c2f296) or [official documentations](https://github.com/pyenv/pyenv#getting-pyenv)  to do so) and run: 
 
 ```console
 pyenv install 3.10 
 pyenv virtualenv 3.10.11  py310
 ```
 
-Make sure you can access the virtual env in Jupyter notebooks. Please note you don't execute these lines in the virtual env. 
+Make sure you can access the virtual env in Jupyter notebooks with following lines. Please note you don't execute these lines in the virtual env. 
 ```console
 pip install —user ipykernel 
 python -m ipykernel install --user --name=py310 
@@ -50,28 +48,28 @@ Now your virtual env is set up and ready !
 
 ## RoBERTa weights
 
-RoBERTa is needed for training  and for inference. 
-The weight can be find in the [Qantev Drive](https://drive.google.com/drive/folders/1thf5Ckn3sZkrUVQ-N0km2nJrlzcQYWNk) here or by yourself in the following folders: Shared/Tech/ML models/PLM_ICD. \ 
-You nedd to extract the take the file RoBERTa-base-PM-M3-Voc-hf.tar and put it in medical_code_inference. 
+RoBERTa is needed for training and for inference. 
+The weights can be find in the [Qantev Drive](https://drive.google.com/drive/folders/1thf5Ckn3sZkrUVQ-N0km2nJrlzcQYWNk) or by yourself in the following folders `Shared/Tech/ML models/PLM_ICD`.  
+You nedd to extract the file `RoBERTa-base-PM-M3-Voc-hf.tar` and put it in `medical_code_inference`. 
 
 ## Logging configuration
 
-We use [Weights&Biases](https://wandb.ai/site) for logging experiments. If you don't have an account you need to create one. Once this is done, ask one of the team members to add you to the Qantev space on W&B. 
-Finally, open the notebook preliminary_process.ipynb and run all cells in it. 
-It will dezip the RoBERTa weights + connect to W&B for logging. For W&B, you will be prompted for your API key that you can find in your user settings. You only need to do that operation once. 
+We use [Weights&Biases](https://wandb.ai/site) for logging experiments. If you don't have an account you need to create one. Once this is done, ask one of the team members to add you to the Qantev space on W&B.  
+Open the notebook `preliminary_process.ipynb` and run all cells in it. It will dezip the RoBERTa weights + connect to W&B for logging. For W&B, you will be prompted for your API key that you can find in your user settings.  
+You only need to do that operation once. 
 
 
 ## Get the data
 
 You have basically 2 options to get the MIMIC data the model will use:
 
-**1. Use directly the dataset already preprocessed:**
-You can copy the already processed dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path Qantev Shared/Tech/MIMIC.  \
-You then select mimiciii_clean.feather (for ICD) or mimiciii_clean_cpt.feather (for CPT) and you pu the file in in medical_code_inference/files/data/mimiciii_clean. 
+**1. Use directly the dataset already preprocessed:**   
+You can copy the already processed dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC`.  
+You then select `mimiciii_clean.feather` (for ICD) or `mimiciii_clean_cpt.feather` (for CPT) and you pu the file in in `medical_code_inference/files/data/mimiciii_clean`. 
 
-**2. Preprocessing MIMIC III (NOT PREFERRED):** \
-You can copy the MIMIC-III dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path Qantev Shared/Tech/MIMIC and select mimic-iii-clinical-database-1.4.zip  \
-Put this file in medical_inference/MIMIC and then start the script prepare_mimic_cpt.py or prepare_mimiciii_clean.py if you want to process it for CPT or ICD. \
+**2. Preprocessing MIMIC III (NOT PREFERRED):**  
+You can copy the MIMIC-III dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC` and select `mimic-iii-clinical-database-1.4.zip`  
+Put this file in `medical_inference/MIMIC` and then start the script `prepare_mimic_cpt.py` or `prepare_mimiciii_clean.py` if you want to process it for CPT or ICD. \
 Note this process might be very long. 
 
 
@@ -85,14 +83,17 @@ To train the model you should run, for:
 
 ## Evaluation
 
-Some checkpoints for the models are available in the [Qantev Drive](https://drive.google.com/drive/folders/1xpqzrYDCT6HBsuOQVUo9NTxr-r7hXpOi) or following this path Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints \
-If you just want to evaluate the models using the provided model_checkpoints you need to set `trainer.epochs=0` and provide the path to the models checkpoint `load_model=path/to/model_checkpoint`. Make sure you use the correct model-checkpoint with the correct configs. \
+Some checkpoints for the models are available in the [Qantev Drive](https://drive.google.com/drive/folders/1xpqzrYDCT6HBsuOQVUo9NTxr-r7hXpOi) or following this path Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints. 
+
+If you just want to evaluate the models using the provided model_checkpoints you need to set `trainer.epochs=0` and provide the path to the models checkpoint `load_model=path/to/model_checkpoint`. Make sure you use the correct model-checkpoint with the correct configs. 
 
 Example:
 - Evaluate PLM-ICD on MIMIC-IV ICD-10 on GPU 0: `python main.py experiment=mimiciv_icd10/plm_icd gpu=0 load_model=path/to/model_checkpoints/mimiciv_icd10/plm_icd epochs=0`
 - Evaluate PLM-CPT hierarchical on MIMIC-III clean on GPU 0: `python main_cpt_hierachical experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0 load_model=path/to/model_checkpoints/mimiciii_clean/plm_cpt_hierarchical epochs=0`
 
-
+\
+\
+\
 
 
 
