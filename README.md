@@ -50,7 +50,7 @@ Now your virtual env is set up and ready !
 
 RoBERTa is needed for training and for inference. 
 The weights can be find in the [Qantev Drive](https://drive.google.com/drive/folders/1thf5Ckn3sZkrUVQ-N0km2nJrlzcQYWNk) or by yourself in the following folders `Shared/Tech/ML models/PLM_ICD`.  
-You nedd to extract the file `RoBERTa-base-PM-M3-Voc-hf.tar` and put it in `medical_code_inference`. 
+You need to extract the file `RoBERTa-base-PM-M3-Voc-hf.tar` and put it in `medical_code_inference`. 
 
 ## Logging configuration
 
@@ -65,7 +65,7 @@ You have basically 2 options to get the MIMIC data the model will use:
 
 **1. Use directly the dataset already preprocessed:**   
 You can copy the already processed dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC`.  
-You then select `mimiciii_clean.feather` (for ICD) or `mimiciii_clean_cpt.feather` (for CPT) and you pu the file in in `medical_code_inference/files/data/mimiciii_clean`. 
+You then select `mimiciii_clean.feather` (for ICD) or `mimiciii_clean_cpt.feather` (for CPT) and you put the file in in `medical_code_inference/files/data/mimiciii_clean`. 
 
 **2. Preprocessing MIMIC III (NOT PREFERRED):**  
 You can copy the MIMIC-III dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC` and select `mimic-iii-clinical-database-1.4.zip`  
@@ -83,15 +83,14 @@ To train the model you should run, for:
 
 ## Evaluation
 
-Some checkpoints for the models are available in the [Qantev Drive](https://drive.google.com/drive/folders/1xpqzrYDCT6HBsuOQVUo9NTxr-r7hXpOi) or following this path Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints. 
+Some checkpoints for the models are available in the [Qantev Drive](https://drive.google.com/drive/folders/1xpqzrYDCT6HBsuOQVUo9NTxr-r7hXpOi) or following this path `Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints`. 
 
 If you just want to evaluate the models using the provided model_checkpoints you need to set `trainer.epochs=0` and provide the path to the models checkpoint `load_model=path/to/model_checkpoint`. Make sure you use the correct model-checkpoint with the correct configs. 
 
-Example:
+Examples:
 - Evaluate PLM-ICD on MIMIC-IV ICD-10 on GPU 0: `python main.py experiment=mimiciv_icd10/plm_icd gpu=0 load_model=path/to/model_checkpoints/mimiciv_icd10/plm_icd epochs=0`
 - Evaluate PLM-CPT hierarchical on MIMIC-III clean on GPU 0: `python main_cpt_hierachical experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0 load_model=path/to/model_checkpoints/mimiciii_clean/plm_cpt_hierarchical epochs=0`
 
-\
 \
 \
 
