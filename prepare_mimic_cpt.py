@@ -29,8 +29,7 @@ from src.settings import (
 )
 
 CODE_SYSTEMS = [
-    ("CPT", "CPTEVENTS.csv.gz", "CPT_CD", "cpt")
-    ,
+    ("CPT", "CPTEVENTS.csv.gz", "CPT_CD", "cpt"),
 ]
 MIN_TARGET_COUNT = 10  # Minimum number of times a code must appear to be included
 
@@ -56,6 +55,7 @@ output_dir.mkdir(parents=True, exist_ok=True)
 #     """Get the duplicated ICD9-PROC codes. The codes are duplicated because they are saved as integers,
 #     removing any zeros at the beginning of the codes. These codes will not be included in the dataset.
 
+
 #     Returns:
 #         set: The duplicated ICD9-PROC codes
 #     """
@@ -79,7 +79,6 @@ def prepare_discharge_summaries(mimic_notes: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Formatted discharge summaries dataframe
     """
-
 
     mimic_notes = mimic_notes.rename(
         columns={
@@ -141,9 +140,8 @@ def download_and_preprocess_code_systems(code_systems: list[tuple]) -> pd.DataFr
 
     merged_codes = merge_code_dataframes(code_dfs)
     merged_codes = replace_nans_with_empty_lists(merged_codes)
-    
-   
-    merged_codes[TARGET_COLUMN] = merged_codes["cpt"] 
+
+    merged_codes[TARGET_COLUMN] = merged_codes["cpt"]
     return merged_codes
 
 

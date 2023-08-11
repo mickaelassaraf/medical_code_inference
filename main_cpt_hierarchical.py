@@ -2,11 +2,11 @@ import logging
 import math
 import os
 from pathlib import Path
-from src.models.plm_cpt_hierarchical_embedding import PLMCPT_HIERARCHICAL
+
 import hydra
 from omegaconf import OmegaConf
 from rich.pretty import pprint
-from src.utils.preprocess_permutation import create_permutations_cpt
+
 from src.data.data_pipeline import data_pipeline
 from src.factories import (
     get_callbacks,
@@ -20,7 +20,9 @@ from src.factories import (
     get_text_encoder,
     get_transform,
 )
+from src.models.plm_cpt_hierarchical_embedding import PLMCPT_HIERARCHICAL
 from src.trainer.trainer import Trainer
+from src.utils.preprocess_permutation import create_permutations_cpt
 from src.utils.seed import set_seed
 
 LOGGER = logging.getLogger(name=__file__)
@@ -88,10 +90,15 @@ def main(cfg: OmegaConf) -> None:
         label_transform=label_transform,
         text_transform=text_transform,
     )
-    permutation_matrices = create_permutations_cpt(label_transform,device)
-    config=cfg.model
+    permutation_matrices = create_permutations_cpt(label_transform, device)
+    config = cfg.model
     data_info = lookups.data_info
-    model = PLMCPT_HIERARCHICAL(text_encoder=text_encoder,permutation_matrices=permutation_matrices, **data_info, **config.configs)
+    model = PLMCPT_HIERARCHICAL(
+        text_encoder=text_encoder,
+        permutation_matrices=permutation_matrices,
+        **data_info,
+        **config.configs,
+    )
 
     model.to(device)
 
@@ -127,8 +134,7 @@ def main(cfg: OmegaConf) -> None:
         num_training_steps=num_training_steps,
     )
     callbacks = get_callbacks(config=cfg.callbacks)
-    
-    
+
     trainer = Trainer(
         config=cfg,
         data=data,

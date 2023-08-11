@@ -21,7 +21,7 @@ DATA_DIRECTORY_MIMICIII_CLEAN = OmegaConf.load("configs/data/mimiciii_clean.yaml
 DATA_DIRECTORY_MIMICIV_ICD9 = OmegaConf.load("configs/data/mimiciv_icd9.yaml").dir
 DATA_DIRECTORY_MIMICIV_ICD10 = OmegaConf.load("configs/data/mimiciv_icd10.yaml").dir
 
-PROJECT = "<your project name>" # this variable is used for genersating plots and tables from wandb
+PROJECT = "<your project name>"  # this variable is used for genersating plots and tables from wandb
 EXPERIMENT_DIR = "files/"  # Path to the experiment directory. Example: ~/experiments
 PALETTE = {
     "PLM-ICD": "#E69F00",
