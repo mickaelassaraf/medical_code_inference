@@ -12,7 +12,7 @@ Make sure `pyenv` is installed
 (see Engineering wiki [here](https://www.notion.so/qantev/Manage-Python-versions-c0083f5a47e54c2788734adef5c2f296) or [official documentations](https://github.com/pyenv/pyenv#getting-pyenv)  to do so) and run: 
 
 ```console
-pyenv install 3.10 
+pyenv install 3.10.11
 pyenv virtualenv 3.10.11  py310
 ```
 
