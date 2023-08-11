@@ -137,3 +137,11 @@ data_analysis/files
 # wandb
 wandb
 outputs
+
+### Custom ### 
+
+RoBERTa-base-PM-M3-Voc
+RoBERTa-base-PM-M3-Voc-hf.tar
+
+files/data/mimiciii_clean/mimiciii_clean_cpt.feather
+files/data/mimiciii_clean/mimiciii_clean_icd.feather
