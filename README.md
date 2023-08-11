@@ -2,8 +2,7 @@
 
 
 ## Create virtual env
-Open a terminal in Kubeflow and execute the following lines in it. 
-Make sure you are in the right location and run: 
+Open a terminal in Kubeflow. Make sure you are in the right location and run: 
 
 ```console
 git clone git@github.com:mickaelassaraf/medical_code_inference.git
