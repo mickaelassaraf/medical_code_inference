@@ -140,6 +140,8 @@ outputs
 
 ### Custom ### 
 
+MIMIC/*
+
 RoBERTa-base-PM-M3-Voc
 RoBERTa-base-PM-M3-Voc-hf.tar
 
