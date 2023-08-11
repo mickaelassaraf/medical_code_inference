@@ -20,7 +20,7 @@ from prepare_data.utils import (
     replace_nans_with_empty_lists,
 )
 from src.settings import (
-    DATA_DIRECTORY_MIMICIII_CLEAN,
+    DATA_DIRECTORY_MIMICIII_CLEAN_ICD,
     DOWNLOAD_DIRECTORY_MIMICIII,
     ID_COLUMN,
     SUBJECT_ID_COLUMN,
@@ -53,7 +53,7 @@ random.seed(10)
 logging.basicConfig(level=logging.INFO)
 
 download_dir = Path(DOWNLOAD_DIRECTORY_MIMICIII)
-output_dir = Path(DATA_DIRECTORY_MIMICIII_CLEAN)
+output_dir = Path(DATA_DIRECTORY_MIMICIII_CLEAN_ICD)
 output_dir.mkdir(parents=True, exist_ok=True)
 
 

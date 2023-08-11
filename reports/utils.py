@@ -7,7 +7,7 @@ import pandas as pd
 import torch
 
 from src.settings import (
-    DATA_DIRECTORY_MIMICIII_CLEAN,
+    DATA_DIRECTORY_MIMICIII_CLEAN_ICD,
     DATA_DIRECTORY_MIMICIV_ICD9,
     DATA_DIRECTORY_MIMICIV_ICD10,
     DATA_DIRECTORY_MIMICIII_50,
@@ -23,8 +23,8 @@ PATIENTS_PATH = Path(DOWNLOAD_DIRECTORY_MIMICIII) / "PATIENTS.csv.gz"
 
 DATASETS = {
     "mimiciii_clean": (
-        os.path.join(DATA_DIRECTORY_MIMICIII_CLEAN, "mimiciii_clean.feather"),
-        os.path.join(DATA_DIRECTORY_MIMICIII_CLEAN, "mimiciii_clean_splits.feather"),
+        os.path.join(DATA_DIRECTORY_MIMICIII_CLEAN_ICD, "mimiciii_clean.feather"),
+        os.path.join(DATA_DIRECTORY_MIMICIII_CLEAN_ICD, "mimiciii_clean_splits.feather"),
     ),
     "mimiciii_full": (
         os.path.join(DATA_DIRECTORY_MIMICIII_FULL, "mimiciii_full.feather"),
@@ -183,21 +183,21 @@ def get_db(run_id: str, experiment_dir: Path = EXPERIMENT_DIR) -> torch.Tensor:
 
 
 def load_data(
-    data_dir: Path = DATA_DIRECTORY_MIMICIII_CLEAN,
+    data_dir: Path = DATA_DIRECTORY_MIMICIII_CLEAN_ICD,
     data_file_name: str = "mimiciii_clean.feather",
 ) -> pd.DataFrame:
     return pd.read_feather(os.path.join(data_dir, data_file_name))
 
 
 def load_splits(
-    data_dir: Path = DATA_DIRECTORY_MIMICIII_CLEAN,
+    data_dir: Path = DATA_DIRECTORY_MIMICIII_CLEAN_ICD,
     split_file_name: str = "mimiciii_clean_splits.feather",
 ) -> pd.DataFrame:
     return pd.read_feather(os.path.join(data_dir, split_file_name))
 
 
 def load_split_data(
-    data_dir: Path = DATA_DIRECTORY_MIMICIII_CLEAN,
+    data_dir: Path = DATA_DIRECTORY_MIMICIII_CLEAN_ICD,
     dataset: str = "mimiciii_clean",
 ) -> pd.DataFrame:
     data_file_name, split_file_name = DATASETS[dataset]

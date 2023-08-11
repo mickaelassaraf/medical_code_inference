@@ -8,7 +8,7 @@ import src.metrics as metrics
 from reports.utils import get_db
 from reports.wandb_utils import get_best_runs
 from src.settings import (
-    DATA_DIRECTORY_MIMICIII_CLEAN,
+    DATA_DIRECTORY_MIMICIII_CLEAN_ICD,
     EXPERIMENT_DIR,
     HUE_ORDER,
     ID_COLUMN,
@@ -21,7 +21,7 @@ from src.settings import (
 sns.set_theme("paper", style="whitegrid", palette="muted")
 
 SWEEP_ID = "83jehgfy"
-df = pd.read_feather(Path(DATA_DIRECTORY_MIMICIII_CLEAN) / "mimiciii_clean.feather")
+df = pd.read_feather(Path(DATA_DIRECTORY_MIMICIII_CLEAN_ICD) / "mimiciii_clean.feather")
 
 
 def one_hot(

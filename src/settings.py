@@ -17,7 +17,8 @@ DOWNLOAD_DIRECTORY_MIMICIV_NOTE = "MIMIC/mimic-iv-note"  # Path to the MIMIC-IV-
 
 DATA_DIRECTORY_MIMICIII_FULL = OmegaConf.load("configs/data/mimiciii_full.yaml").dir
 DATA_DIRECTORY_MIMICIII_50 = OmegaConf.load("configs/data/mimiciii_50.yaml").dir
-DATA_DIRECTORY_MIMICIII_CLEAN = OmegaConf.load("configs/data/mimiciii_clean.yaml").dir
+DATA_DIRECTORY_MIMICIII_CLEAN_ICD = OmegaConf.load("configs/data/mimiciii_clean_icd.yaml").dir
+DATA_DIRECTORY_MIMICIII_CLEAN_CPT = OmegaConf.load("configs/data/mimiciii_clean_cpt.yaml").dir
 DATA_DIRECTORY_MIMICIV_ICD9 = OmegaConf.load("configs/data/mimiciv_icd9.yaml").dir
 DATA_DIRECTORY_MIMICIV_ICD10 = OmegaConf.load("configs/data/mimiciv_icd10.yaml").dir
 
