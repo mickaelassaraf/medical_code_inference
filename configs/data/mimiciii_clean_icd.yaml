@@ -7,7 +7,3 @@ code_column_names:
   - icd9_diag
   - icd9_proc
 max_length: 4000
-
-
-
-
