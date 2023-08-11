@@ -20,7 +20,7 @@ from prepare_data.utils import (
     replace_nans_with_empty_lists,
 )
 from src.settings import (
-    DATA_DIRECTORY_MIMICIII_CLEAN_ICD,
+    DATA_DIRECTORY_MIMICIII_CLEAN_CPT,
     DOWNLOAD_DIRECTORY_MIMICIII,
     ID_COLUMN,
     SUBJECT_ID_COLUMN,
@@ -49,7 +49,7 @@ random.seed(10)
 # Change the path of DOWNLOAD_DIRECTORY to the path where you downloaded mimiciii
 logging.basicConfig(level=logging.INFO)
 download_dir = Path(DOWNLOAD_DIRECTORY_MIMICIII)
-output_dir = Path(DATA_DIRECTORY_MIMICIII_CLEAN_ICD)
+output_dir = Path(DATA_DIRECTORY_MIMICIII_CLEAN_CPT)
 output_dir.mkdir(parents=True, exist_ok=True)
 # def get_duplicated_icd9_proc_codes() -> set:
 #     """Get the duplicated ICD9-PROC codes. The codes are duplicated because they are saved as integers,
