@@ -11,8 +11,8 @@ SUBJECT_ID_COLUMN = "subject_id"
 DOWNLOAD_DIRECTORY_MIMICIII = (
     "MIMIC"  # Path to the MIMIC-III data. Example: ~/mimiciii/1.4
 )
-DOWNLOAD_DIRECTORY_MIMICIV = "path/to/mimiciv"  # Path to the MIMIC-IV data. Example: ~/physionet.org/files/mimiciv/2.2
-DOWNLOAD_DIRECTORY_MIMICIV_NOTE = "path/to/mimiciv-note"  # Path to the MIMIC-IV-Note data. Example: ~/physionet.org/files/mimic-iv-note/2.2
+DOWNLOAD_DIRECTORY_MIMICIV = "MIMIC/mimic-iv"  # Path to the MIMIC-IV data. Example: ~/physionet.org/files/mimiciv/2.2
+DOWNLOAD_DIRECTORY_MIMICIV_NOTE = "MIMIC/mimic-iv-note"  # Path to the MIMIC-IV-Note data. Example: ~/physionet.org/files/mimic-iv-note/2.2
 
 
 DATA_DIRECTORY_MIMICIII_FULL = OmegaConf.load("configs/data/mimiciii_full.yaml").dir
