@@ -33,7 +33,6 @@ pyenv activate py310
 In the virtual env, run the following lines to install packages needed for the files to run smoothly:
 
 ```console
-pyenv activate py310
 pip install hydra
 pip install hydra-core
 pip install wandb
@@ -64,21 +63,28 @@ You have basically 2 options to get the MIMIC data the model will use:
 
 **1. Use directly the dataset already preprocessed:**   
 You can copy the already processed dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC`.  
-You then select `mimiciii_clean.feather` (for ICD) or `mimiciii_clean_cpt.feather` (for CPT) and you put the file in in `medical_code_inference/files/data/mimiciii_clean`. 
+You then select `mimiciii_clean_icd.feather` or `mimiciii_clean_cpt.feather` and you put the file in the respective place  `medical_code_inference/files/data/mimiciii_clean` (for ICD) or `medical_code_inference/files/data/mimiciii_clean_cpt` (for CPT).  
+For MIMIC-IV, you perform the same opeartions with according names. Note that there are no CPT on MIMIC-IV, but two ICD classifications. 
 
-**2. Preprocessing MIMIC III (NOT PREFERRED):**  
+For the insurer's data, it can be found on the datalake at this path `datalake/structured_data/axa_icd10.feather` and put it in `files/data/axa_icd10`. This data has been obtained by running claims on OCR + translating them in english + reformat them in the same schema as MIMIC-IV after preprocessing.
+**MAKE SURE TO NEVER COMMIT THIS DATAON GITHUB.**
+
+**2. Preprocessing MIMIC (NOT PREFERRED):**  
 You can copy the MIMIC-III dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC` and select `mimic-iii-clinical-database-1.4.zip`  
-Put this file in `medical_inference/MIMIC` and then start the script `prepare_mimic_cpt.py` or `prepare_mimiciii_clean.py` if you want to process it for CPT or ICD. \
-Note this process might be very long. 
-
+Put this file in `medical_inference/MIMIC` dezip it and then start the script `prepare_mimiciii_cpt.py` or `prepare_mimiciii_clean.py` if you want to process it for CPT or ICD. \
+If you want to preprocess MIMIC-IV, you put both folders `mimic-iv` and `mimic-iv-note` under `MIMIC` and run `prepare_mimiciv.py`.  
+Note theses processes might be very long.  
 
 ## Run Training 
 
 To train the model you should run, for:
-- PLM-ICD: `python main.py experiment=mimiciii_clean/plm_icd gpu=0`
-- PLM-CPT : `python main.py experiment=mimiciii_clean/plm_cpt gpu=0`
-- PLM-ICD hierarchical: `python main_icd_hierachical.py experiment=mimiciii_clean/plm_icd_hierarchical_embedding gpu=0`
-- PLM-CPT hierarchical: `python main_cpt_hierachical.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0`
+- PLM-ICD on MIMIC-III: `python main.py experiment=mimiciii_clean/plm_icd gpu=0`
+- PLM-CPT on MIMIC-III : `python main.py experiment=mimiciii_clean/plm_cpt gpu=0`
+- PLM-ICD hierarchical on MIMIC-III: `python main_icd_hierachical.py experiment=mimiciii_clean/plm_icd_hierarchical_embedding gpu=0`
+- PLM-CPT hierarchical on MIMIC-III: `python main_cpt_hierachical.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0`
+- PLM-ICD on insurer's data: `python main.py experiment=axa/plm_icd.yaml gpu=0`
+
+`gpu=0` ensures that we use the GPU labeled 0. 
 
 ## Evaluation
 
