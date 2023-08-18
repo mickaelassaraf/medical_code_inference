@@ -151,6 +151,8 @@ files/data/mimiciii_clean/mimiciii_clean_icd.feather
 files/data/mimiciv_icd10/mimiciv_icd10.feather
 files/data/mimiciv_icd9/mimiciv_icd9.feather
 files/data/axa_icd10/axa_icd10.feather
-files/plm-icd/config.yaml
-files/plm-icd/target2index.json
-files/plm-icd/final_model.pt
+files/mimiciv_icd10/config.yaml
+files/mimiciv_icd10/target2index.json
+files/mimiciv_icd10/final_model.pt
+
+files/mimiciv_icd10_scratch/best_model.pt
