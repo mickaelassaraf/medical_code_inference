@@ -1,64 +1,108 @@
-# Run experiment on kubeflow
-
-## open a terminal
-`git clone https://github.com/mickaelqantev/preprocess_mimic_update`
-`pyenv install 3.10 `
-`pyenv virtualenv 3.10.11  py310`
-## open a new terminal
-`pip install —user ipykernel `
-`python -m ipykernel install --user --name=py310 `
-`pyenv activate py310`
-`pip install hydra`
-`pip install hydra-core`
-`pip install wandb`
-`pip install wget`
-`pip install omegaconf`
-`pip install vaex`
-`pip install -r requirements.txt`
-
-## copy the weight of Roberta
-
-The weight can be find in the qantev drive in Qantev Shared/Tech/ML models/PLM_ICD and you need to extract it in the folder preprocess_mimic_update
+# Run experiment on Kubeflow
 
 
-## Preprocessing MIMIC III (OPTIONAL)
+## Create virtual env
+Open a terminal in Kubeflow. Make sure you are in the right location and run: 
 
-you can copy the mimic dataset from Qantev Shared/Tech/MIMIC/mimic-iii-clinical-database-1.4.zip and extract in the folder preprocess_mimic_update/MIMIC and then start the script prepare_mimic_cpt for cpt or prepare_mimiciii_clean for icd.
+```console
+git clone git@github.com:mickaelassaraf/medical_code_inference.git
+```
 
-## Use directly the dataset already preprocessed
+Make sure `pyenv` is installed 
+(see Engineering wiki [here](https://www.notion.so/qantev/Manage-Python-versions-c0083f5a47e54c2788734adef5c2f296) or [official documentations](https://github.com/pyenv/pyenv#getting-pyenv)  to do so) and run: 
 
-you should copy the preprocessed dataset from Qantev Shared/Tech/MIMIC/mimiciii_clean.feather (for icd dataset) or from Qantev Shared/Tech/MIMIC/mimiciii_clean_cpt.feather (for cpt dataset) in preprocess_mimic_update/data/mimiciii_clean
+```console
+pyenv install 3.10.11
+pyenv virtualenv 3.10.11  py310
+```
+
+Make sure you can access the virtual env in Jupyter notebooks with following lines. Please note you don't execute these lines in the virtual env. 
+```console
+pip install —user ipykernel 
+python -m ipykernel install --user --name=py310 
+```
+
+## Config virtual env
+
+Once the virtual env is created, activate it using:
+
+```console
+pyenv activate py310
+```
+
+In the virtual env, run the following lines to install packages needed for the files to run smoothly:
+
+```console
+pip install hydra
+pip install hydra-core
+pip install wandb
+pip install wget
+pip install omegaconf
+pip install vaex
+pip install -r requirements.txt
+```
+
+Now your virtual env is set up and ready ! 
+
+## RoBERTa weights
+
+RoBERTa is needed for training and for inference. 
+The weights can be find in the [Qantev Drive](https://drive.google.com/drive/folders/1thf5Ckn3sZkrUVQ-N0km2nJrlzcQYWNk) or by yourself in the following folders `Shared/Tech/ML models/PLM_ICD`.  
+You need to extract the file `RoBERTa-base-PM-M3-Voc-hf.tar` and put it in `medical_code_inference`. 
+
+## Logging configuration
+
+We use [Weights&Biases](https://wandb.ai/site) for logging experiments. If you don't have an account you need to create one. Once this is done, ask one of the team members to add you to the Qantev space on W&B.  
+Open the notebook `preliminary_process.ipynb` and run all cells in it. It will dezip the RoBERTa weights + connect to W&B for logging. For W&B, you will be prompted for your API key that you can find in your user settings.  
+You only need to do that operation once. 
 
 
-## (OPTIONAL) To access the result you can create a wandb account and then login with your api key
+## Get the data
 
+You have basically 2 options to get the MIMIC data the model will use:
+
+**1. Use directly the dataset already preprocessed:**   
+You can copy the already processed dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC`.  
+You then select `mimiciii_clean_icd.feather` or `mimiciii_clean_cpt.feather` and you put the file in the respective place  `medical_code_inference/files/data/mimiciii_clean` (for ICD) or `medical_code_inference/files/data/mimiciii_clean_cpt` (for CPT).  
+For MIMIC-IV, you perform the same opeartions with according names. Note that there are no CPT on MIMIC-IV, but two ICD classifications. 
+
+For the insurer's data, it can be found on the datalake at this path `datalake/structured_data/axa_icd10.feather` and put it in `files/data/axa_icd10`. This data has been obtained by running claims on OCR + translating them in english + reformat them in the same schema as MIMIC-IV after preprocessing.
+**MAKE SURE TO NEVER COMMIT THIS DATAON GITHUB.**
+
+**2. Preprocessing MIMIC (NOT PREFERRED):**  
+You can copy the MIMIC-III dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC` and select `mimic-iii-clinical-database-1.4.zip`  
+Put this file in `medical_inference/MIMIC` dezip it and then start the script `prepare_mimiciii_cpt.py` or `prepare_mimiciii_clean.py` if you want to process it for CPT or ICD. \
+If you want to preprocess MIMIC-IV, you put both folders `mimic-iv` and `mimic-iv-note` under `MIMIC` and run `prepare_mimiciv.py`.  
+Note theses processes might be very long.  
 
 ## Run Training 
 
-To train the model you should run
+To train the model you should run, for:
+- PLM-ICD on MIMIC-III: `python main.py experiment=mimiciii_clean/plm_icd gpu=0`
+- PLM-CPT on MIMIC-III : `python main.py experiment=mimiciii_clean/plm_cpt gpu=0`
+- PLM-ICD hierarchical on MIMIC-III: `python main_icd_hierachical.py experiment=mimiciii_clean/plm_icd_hierarchical_embedding gpu=0`
+- PLM-CPT hierarchical on MIMIC-III: `python main_cpt_hierachical.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0`
+- PLM-ICD on insurer's data: `python main.py experiment=axa/plm_icd.yaml gpu=0`
 
-`python main.py experiment=mimiciii_clean/plm_icd gpu=0` for plm icd 
-
-`python main.py experiment=mimiciii_clean/plm_cpt gpu=0` for plm cpt
-
-`python main_icd_hierachical.py experiment=mimiciii_clean/plm_icd_hierarchical_embedding gpu=0` for plm icd hierachical
-
-`python main_cpt_hierachical.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0` for plm cpt hierachical
+`gpu=0` ensures that we use the GPU labeled 0. 
 
 ## Evaluation
 
-some checkpoint for the models are available in Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints
+Some checkpoints for the models are available in the [Qantev Drive](https://drive.google.com/drive/folders/1xpqzrYDCT6HBsuOQVUo9NTxr-r7hXpOi) or following this path `Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints`. 
+
+If you just want to evaluate the models using the provided model_checkpoints you need to set `trainer.epochs=0` and provide the path to the models checkpoint `load_model=path/to/model_checkpoint`. Make sure you use the correct model-checkpoint with the correct configs. 
+
+Examples:
+- Evaluate PLM-ICD on MIMIC-IV ICD-10 on GPU 0: `python main.py experiment=mimiciv_icd10/plm_icd gpu=0 load_model=path/to/model_checkpoints/mimiciv_icd10/plm_icd epochs=0`
+- Evaluate PLM-CPT hierarchical on MIMIC-III clean on GPU 0: `python main_cpt_hierachical experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0 load_model=path/to/model_checkpoints/mimiciii_clean/plm_cpt_hierarchical epochs=0`
+
+\
+\
+\
+\
 
 
-If you just want to evaluate the models using the provided model_checkpoints you need to do set `trainer.epochs=0` and provide the path to the models checkpoint `load_model=path/to/model_checkpoint`. Make sure you the correct model-checkpoint with the correct configs.
-
-Example:
-Evaluate PLM-ICD on MIMIC-IV ICD-10 on GPU 0: `python main.py experiment=mimiciv_icd10/plm_icd gpu=0 load_model=path/to/model_checkpoints/mimiciv_icd10/plm_icd epochs=0`
-
-Evaluate PLM-CPT hierarchical on MIMIC-III clean on GPU 0: `python main_cpt_hierachical experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0 load_model=path/to/model_checkpoints/mimiciii_clean/plm_cpt_hierarchical epochs=0`
-
-
-# Readme from the original github
+# README from the original github repo for reference
 
 # ⚕️Automated Medical Coding on MIMIC-III and MIMIC-IV: A Critical Review and Replicability Study
 

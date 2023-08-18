@@ -2,7 +2,7 @@
 defaults:
   - override /model: plm_icd
   - override /text_encoder: defaults
-  - override /data: mimiciii_clean
+  - override /data: mimiciii_clean_icd
   - override /lr_scheduler: warmup_linear_decay
   - override /dataset: huggingface
   - override /text_transform: huggingface

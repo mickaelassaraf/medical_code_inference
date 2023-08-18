@@ -7,8 +7,8 @@ from typing import Optional
 import pandas as pd
 import vaex
 import wget
-
-from src.settings import ID_COLUMN, SUBJECT_ID_COLUMN, TARGET_COLUMN, TEXT_COLUMN
+from src.settings import (ID_COLUMN, SUBJECT_ID_COLUMN, TARGET_COLUMN,
+                          TEXT_COLUMN)
 
 
 def make_version_dir(output_dir: Path) -> Path:

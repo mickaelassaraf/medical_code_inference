@@ -3,10 +3,18 @@ import random
 from pathlib import Path
 
 import pandas as pd
-from src.settings import (DATA_DIRECTORY_MIMICIII_CLEAN_ICD, ID_COLUMN,
-                          SUBJECT_ID_COLUMN, TARGET_COLUMN)
-from src.utils.stratify_function import (iterative_stratification,
-                                         kl_divergence, labels_not_in_split)
+
+from src.settings import (
+    DATA_DIRECTORY_MIMICIII_CLEAN_CPT,
+    ID_COLUMN,
+    SUBJECT_ID_COLUMN,
+    TARGET_COLUMN,
+)
+from src.utils.stratify_function import (
+    iterative_stratification,
+    kl_divergence,
+    labels_not_in_split,
+)
 
 TEST_SIZE = 0.15  # Test split ratios
 VAL_SIZE = 0.1  # Val split ratio
@@ -15,7 +23,7 @@ STEP_SIZE = 0.2  # Step size for the iterative stratification
 random.seed(10)
 
 logging.basicConfig(level=logging.INFO)
-output_dir = Path(DATA_DIRECTORY_MIMICIII_CLEAN_ICD)
+output_dir = Path(DATA_DIRECTORY_MIMICIII_CLEAN_CPT)
 
 mimic_clean = pd.read_feather(output_dir / "mimiciii_clean_cpt.feather")
 mimic_clean[TARGET_COLUMN] = mimic_clean[TARGET_COLUMN].apply(lambda x: list(x))
