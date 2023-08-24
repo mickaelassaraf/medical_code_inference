@@ -33,12 +33,6 @@
 - name: ExactMatchRatio
   configs: 
     threshold: 0.5
-- name: Recall_K
-  configs: 
-    k: 10
-- name: Recall_K
-  configs: 
-    k: 15
 - name: MeanAveragePrecision
   configs: {}
 - name: PrecisionAtRecall
