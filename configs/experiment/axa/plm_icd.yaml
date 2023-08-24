@@ -2,13 +2,13 @@
 defaults:
   - override /model: plm_icd
   - override /text_encoder: defaults
-  - override /data: axa_icd10
+  - override /data: mimic_axa_icd10
   - override /lr_scheduler: warmup_linear_decay
   - override /dataset: huggingface
   - override /text_transform: huggingface
   - override /optimizer: adamw
   - override /callbacks: mean_average_precision
-  - override /metrics: axa_custom
+#  - override /metrics: axa_custom
 
 
 dataloader:
@@ -23,7 +23,7 @@ optimizer:
 
 trainer:
   threshold_tuning: true
-  epochs: 20
+  epochs: 10
   
 data.max_length: 4000
 
