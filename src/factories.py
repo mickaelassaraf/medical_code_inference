@@ -35,10 +35,10 @@ def get_lookups(
 
 
 def get_model(
-    config: OmegaConf, data_info: dict, text_encoder: Optional[Any] = None
+    config: OmegaConf, data_info: dict, text_encoder: Optional[Any] = None, label_transform: Optional[Any] = None
 ) -> models.BaseModel:
     model_class = getattr(models, config.name)
-    return model_class(text_encoder=text_encoder, **data_info, **config.configs)
+    return model_class(text_encoder=text_encoder,label_transform=label_transform, **data_info, **config.configs)
 
 
 def get_optimizer(config: OmegaConf, model: models.BaseModel) -> torch.optim.Optimizer:

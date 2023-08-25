@@ -95,7 +95,7 @@ def main(cfg: OmegaConf) -> None:
     data_info = lookups.data_info
     model = PLMCPT_HIERARCHICAL(
         text_encoder=text_encoder,
-        permutation_matrices=permutation_matrices,
+        label_transform=label_transform,
         **data_info,
         **config.configs,
     )

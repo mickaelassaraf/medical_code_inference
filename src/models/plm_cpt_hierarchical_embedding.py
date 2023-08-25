@@ -17,14 +17,13 @@
 import torch
 import torch.utils.checkpoint
 from torch import nn
-
-from transformers import RobertaModel, AutoConfig
+from transformers import AutoConfig, RobertaModel
 
 from src.models.modules.attention import LabelAttentionHierarchicalCPT
 
 
 class PLMCPT_HIERARCHICAL(nn.Module):
-    def __init__(self, num_classes: int, model_path: str,permutation_matrices, **kwargs):
+    def __init__(self, num_classes: int, model_path: str, label_transform, **kwargs):
         super().__init__()
         self.config = AutoConfig.from_pretrained(
             model_path, num_labels=num_classes, finetuning_task=None
@@ -37,7 +36,7 @@ class PLMCPT_HIERARCHICAL(nn.Module):
             input_size=self.config.hidden_size,
             projection_size=self.config.hidden_size,
             num_classes=num_classes,
-            permutation_matrices=permutation_matrices
+            label_transform=label_transform
         )
         self.loss = torch.nn.functional.binary_cross_entropy_with_logits
 
