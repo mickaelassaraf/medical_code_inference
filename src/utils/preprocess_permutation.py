@@ -61,7 +61,7 @@ def create_permutations_cpt(label_transform,device):
     permutation_matrix_1 = create_permutation_matrix(mapped_indices_1, num_classes=len(mapping_dict_1)).to(device)
     return permutation_matrix_1,permutation_matrix_2,permutation_matrix_3,permutation_matrix_4,permutation_matrix_all
 
-def create_permutations_icd(label_transform,device):
+def create_permutations_icd9(label_transform,device):
 
 
     def get_chapitre(code):

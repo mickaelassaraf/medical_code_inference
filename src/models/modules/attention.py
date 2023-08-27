@@ -2,7 +2,10 @@ import torch
 import torch.nn as nn
 from torch.nn.init import xavier_uniform_
 
-from src.utils.preprocess_permutation import create_permutations_cpt
+from src.utils.preprocess_permutation import (
+    create_permutations_cpt,
+    create_permutations_icd9,
+)
 
 
 class LabelAttention(nn.Module):
@@ -108,11 +111,14 @@ class LabelAttentionHierarchicalCPT(nn.Module):
         torch.nn.init.normal_(self.embedding_second.weight, mean, std)
         torch.nn.init.normal_(self.embedding_one.weight, mean, std)
 
-class LabelAttentionHierarchicalICD(nn.Module):
-    def __init__(self, input_size: int, projection_size: int, num_classes: int,permutation_matrices):
+class LabelAttentionHierarchicalICD9(nn.Module):
+    def __init__(self, input_size: int, projection_size: int, num_classes: int,label_transform):
         super().__init__()
         self.first_linear = nn.Linear(input_size, projection_size, bias=False)
-        self.permutation_matrix_chapter,self.permutation_matrix_section,self.permutation_matrix_level_1,self.permutation_matrix_all=permutation_matrices
+        
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.permutation_matrix_chapter,self.permutation_matrix_section,self.permutation_matrix_level_1,self.permutation_matrix_all = create_permutations_icd9(label_transform, self.device)
+        
         self.full_embedding = nn.Linear(projection_size, num_classes)
         self.embedding_third = nn.Linear(projection_size, self.permutation_matrix_level_1.shape[0])
         self.embedding_second = nn.Linear(projection_size, self.permutation_matrix_section.shape[0])
