@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - override /model: plm_icd_hierarchical_embedding
+  - override /model: plm_icd9_hierarchical_embedding
   - override /text_encoder: defaults
   - override /data: mimiciii_clean_icd
   - override /lr_scheduler: warmup_linear_decay
@@ -8,7 +8,6 @@ defaults:
   - override /text_transform: huggingface
   - override /optimizer: adamw
   - override /callbacks: mean_average_precision
-  
 
 dataloader:
   max_batch_size: 1
@@ -18,18 +17,9 @@ optimizer:
   configs:
     lr: 5e-5
     weight_decay: 0
-    
 
 trainer:
   threshold_tuning: true
   epochs: 20
-  
+
 data.max_length: 4000
-
-
-
-
-
-
-
-
