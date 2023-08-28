@@ -8,10 +8,18 @@ from omegaconf import OmegaConf
 from rich.pretty import pprint
 
 from src.data.data_pipeline import data_pipeline
-from src.factories import (get_callbacks, get_dataloaders, get_datasets,
-                           get_lookups, get_lr_scheduler,
-                           get_metric_collections, get_model, get_optimizer,
-                           get_text_encoder, get_transform)
+from src.factories import (
+    get_callbacks,
+    get_dataloaders,
+    get_datasets,
+    get_lookups,
+    get_lr_scheduler,
+    get_metric_collections,
+    get_model,
+    get_optimizer,
+    get_text_encoder,
+    get_transform,
+)
 from src.trainer.trainer import Trainer
 from src.utils.seed import set_seed
 
@@ -82,7 +90,7 @@ def main(cfg: OmegaConf) -> None:
     )
 
     model = get_model(
-        config=cfg.model, data_info=lookups.data_info, text_encoder=text_encoder
+        config=cfg.model, data_info=lookups.data_info, text_encoder=text_encoder, label_transform = label_transform
     )
     model.to(device)
 

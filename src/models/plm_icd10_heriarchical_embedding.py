@@ -19,11 +19,11 @@ import torch.utils.checkpoint
 from torch import nn
 from transformers import AutoConfig, RobertaModel
 
-from src.models.modules.attention import LabelAttentionHierarchicalCPT
+from src.models.modules.attention import LabelAttentionHierarchicalICD10
 
 
-class PLMCPT_HIERARCHICAL(nn.Module):
-    def __init__(self, num_classes: int, model_path: str, label_transform, **kwargs):
+class PLMICD10_HIERARCHICAL(nn.Module):
+    def __init__(self, num_classes: int, model_path: str,label_transform, **kwargs):
         super().__init__()
         self.config = AutoConfig.from_pretrained(
             model_path, num_labels=num_classes, finetuning_task=None
@@ -32,7 +32,7 @@ class PLMCPT_HIERARCHICAL(nn.Module):
             self.config, add_pooling_layer=False
         ).from_pretrained(model_path, config=self.config)
         
-        self.attention = LabelAttentionHierarchicalCPT(
+        self.attention = LabelAttentionHierarchicalICD10(
             input_size=self.config.hidden_size,
             projection_size=self.config.hidden_size,
             num_classes=num_classes,

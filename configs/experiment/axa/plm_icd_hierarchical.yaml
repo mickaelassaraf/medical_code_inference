@@ -1,13 +1,14 @@
 # @package _global_
 defaults:
-  - override /model: plm_icd9_hierarchical_embedding
+  - override /model: plm_icd10_hierarchical_embedding
   - override /text_encoder: defaults
-  - override /data: mimiciii_clean_icd
+  - override /data: mimic_axa_icd10
   - override /lr_scheduler: warmup_linear_decay
   - override /dataset: huggingface
   - override /text_transform: huggingface
   - override /optimizer: adamw
   - override /callbacks: mean_average_precision
+#  - override /metrics: axa_custom
 
 dataloader:
   max_batch_size: 1
@@ -20,6 +21,6 @@ optimizer:
 
 trainer:
   threshold_tuning: true
-  epochs: 20
+  epochs: 10
 
 data.max_length: 4000
