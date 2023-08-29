@@ -45,16 +45,16 @@ pip install -r requirements.txt
 
 Now your virtual env is set up and ready !
 
-## RoBERTa weights
+## RoBERTa-PM weights
 
-RoBERTa is needed for training and for inference.
-The weights can be find in the [Qantev Drive](https://drive.google.com/drive/folders/1thf5Ckn3sZkrUVQ-N0km2nJrlzcQYWNk) or by yourself in the following folders `Shared/Tech/ML models/PLM_ICD`.  
+RoBERTa-PM is needed for training and for inference.
+The weights can be find in the [Qantev Drive](https://drive.google.com/drive/folders/1thf5Ckn3sZkrUVQ-N0km2nJrlzcQYWNk) in the following folders `Shared/Tech/ML models/PLM_ICD`.  
 You need to extract the file `RoBERTa-base-PM-M3-Voc-hf.tar` and put it in `medical_code_inference`.
 
 ## Logging configuration
 
 We use [Weights&Biases](https://wandb.ai/site) for logging experiments. If you don't have an account you need to create one. Once this is done, ask one of the team members to add you to the Qantev space on W&B.  
-Open the notebook `preliminary_process.ipynb` and run all cells in it. It will dezip the RoBERTa weights + connect to W&B for logging. For W&B, you will be prompted for your API key that you can find in your user settings.  
+Open the notebook `preliminary_process.ipynb` and run all cells in it. It will dezip the RoBERTa-PM weights + connect to W&B for logging. For W&B, you will be prompted for your API key that you can find in your user settings.  
 You only need to do that operation once.
 
 ## Get the data
@@ -62,41 +62,46 @@ You only need to do that operation once.
 You have basically 2 options to get the MIMIC data the model will use:
 
 **1. Use directly the dataset already preprocessed:**  
-You can copy the already processed dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC`.  
+You can copy the already processed dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) following this path `Qantev Shared/Tech/MIMIC`.  
 You then select `mimiciii_clean_icd.feather` or `mimiciii_clean_cpt.feather` and you put the file in the respective place `medical_code_inference/files/data/mimiciii_clean` (for ICD) or `medical_code_inference/files/data/mimiciii_clean_cpt` (for CPT).  
 For MIMIC-IV, you perform the same opeartions with according names. Note that there are no CPT on MIMIC-IV, but two ICD classifications.
 
-For the insurer's data, it can be found on the datalake at this path `datalake/structured_data/axa_icd10.feather` and put it in `files/data/axa_icd10`. This data has been obtained by running claims on OCR + translating them in english + reformat them in the same schema as MIMIC-IV after preprocessing.
-**MAKE SURE TO NEVER COMMIT THIS DATA ON GITHUB.**
-
 **2. Preprocessing MIMIC (NOT PREFERRED):**  
-You can copy the MIMIC-III dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) or follow this path `Qantev Shared/Tech/MIMIC` and select `mimic-iii-clinical-database-1.4.zip`  
+You can copy the MIMIC-III dataset from the [Qantev Drive](https://drive.google.com/drive/folders/1kK1FJ-rcnvPdJwGJuVx4ubZ7c7hiYd4v) following this path `Qantev Shared/Tech/MIMIC` and select `mimic-iii-clinical-database-1.4.zip`  
 Put this file in `medical_inference/MIMIC` dezip it and then start the script `prepare_mimiciii_cpt.py` or `prepare_mimiciii_clean.py` if you want to process it for CPT or ICD. \
 If you want to preprocess MIMIC-IV, you put both folders `mimic-iv` and `mimic-iv-note` under `MIMIC` and run `prepare_mimiciv.py`.  
 Note theses processes might be very long.
 
+For the insurer's data, it can be found on the datalake at this path `datalake/structured_data/axa_icd10.feather` and should be put it in `files/data/axa_icd10`. This data has been obtained by running claims on OCR + translating them in english + reformat them in the same schema as MIMIC-IV after preprocessing.
+Also, a merge between MIMIC-IV data and the insurer's data has been performed and can be found in the datalake at this path `datalake/structured_data/mimic_axa_icd10.feather`.
+It should be put here `files/data/mimic_axa`
+**THIS DATA SHOULD NEVER LEAVE THE DATALAKE**
+**IN PARTICULAR MAKE SURE TO NEVER COMMIT THIS DATA ON GITHUB.**
+
 ## Run Training
 
-To train the model you should run, for:
+To train the model for the different use case you should run:
 
 - PLM-ICD on MIMIC-III: `python main.py experiment=mimiciii_clean/plm_icd gpu=0`
 - PLM-CPT on MIMIC-III : `python main.py experiment=mimiciii_clean/plm_cpt gpu=0`
-- PLM-ICD hierarchical on MIMIC-III: `python main_icd_hierachical.py experiment=mimiciii_clean/plm_icd_hierarchical_embedding gpu=0`
-- PLM-CPT hierarchical on MIMIC-III: `python main_cpt_hierachical.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0`
-- PLM-ICD on insurer's data: `python main.py experiment=axa/plm_icd.yaml gpu=0`
+- PLM-ICD hierarchical on MIMIC-III: `python main.py experiment=mimiciii_clean/plm_icd_hierarchical_embedding gpu=0`
+- PLM-CPT hierarchical on MIMIC-III: `python main.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0`
+- PLM-ICD on MIMIC-IV: `python main.py experiment=mimiciv_icd10/plm_icd gpu=0`
+- PLM-ICD on MIMIC-IV + AXA: `python main.py experiment=axa/plm_icd gpu=0`
+- PLM-ICD hierarchical on MIMIC-IV + AXA: `python main.py experiment=axa/plm_icd_hierarchical gpu=0`
 
 `gpu=0` ensures that we use the GPU labeled 0.
 
 ## Evaluation
 
-Some checkpoints for the models are available in the [Qantev Drive](https://drive.google.com/drive/folders/1xpqzrYDCT6HBsuOQVUo9NTxr-r7hXpOi) or following this path `Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints`.
+Some checkpoints for the models are available in the [Qantev Drive](https://drive.google.com/drive/folders/1xpqzrYDCT6HBsuOQVUo9NTxr-r7hXpOi) following this path `Qantev Shared/Tech/ML models/PLM_ICD/model_checkpoints`.
 
 If you just want to evaluate the models using the provided model_checkpoints you need to set `trainer.epochs=0` and provide the path to the models checkpoint `load_model=path/to/model_checkpoint`. Make sure you use the correct model-checkpoint with the correct configs.
 
 Examples:
 
 - Evaluate PLM-ICD on MIMIC-IV ICD-10 on GPU 0: `python main.py experiment=mimiciv_icd10/plm_icd gpu=0 load_model=path/to/model_checkpoints/mimiciv_icd10/plm_icd epochs=0`
-- Evaluate PLM-CPT hierarchical on MIMIC-III clean on GPU 0: `python main_cpt_hierachical experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0 load_model=path/to/model_checkpoints/mimiciii_clean/plm_cpt_hierarchical epochs=0`
+- Evaluate PLM-CPT hierarchical on MIMIC-III clean on GPU 0: `python main.py experiment=mimiciii_clean/plm_cpt_hierarchical_embedding gpu=0 load_model=path/to/model_checkpoints/mimiciii_clean/plm_cpt_hierarchical epochs=0`
 
 \
 \
