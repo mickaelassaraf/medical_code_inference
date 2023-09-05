@@ -1,10 +1,10 @@
 defaults:
   - defaults
-dir: files/data/mimic_axa_icd
-data_filename: mimic_axa_icd10.feather
+dir: files/data/mimic_axa_cpt
+data_filename: mimic_axa_cpt.feather
 split_filename: mimic_axa_icd10_split.feather
 code_column_names:
-  - icd10_diag
+  - cpt
 max_length: 4000
 
 
