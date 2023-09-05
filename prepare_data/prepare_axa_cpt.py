@@ -4,9 +4,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import vaex
+from src.settings import DATA_DIRECTORY_AXA_CPT, TEXT_COLUMN
 
 from prepare_data.utils import TextPreprocessor
-from src.settings import DATA_DIRECTORY_AXA_ICD10, TEXT_COLUMN
 
 preprocessor = TextPreprocessor(
     lower=True,
@@ -25,11 +25,11 @@ preprocessor = TextPreprocessor(
 logging.basicConfig(level=logging.INFO)
 
 
-download_dir = Path(DATA_DIRECTORY_AXA_ICD10)
-output_dir = Path(DATA_DIRECTORY_AXA_ICD10)
+download_dir = Path(DATA_DIRECTORY_AXA_CPT)
+output_dir = Path(DATA_DIRECTORY_AXA_CPT)
 
 # Load the data
-axa_df = pd.read_feather(download_dir / "axa_icd10.feather")
+axa_df = pd.read_feather(download_dir / "axa_cpt.feather")
 
 # Text preprocess the notes
 with vaex.cache.memory_infinite():  # pylint: disable=not-context-manager
@@ -38,4 +38,4 @@ with vaex.cache.memory_infinite():  # pylint: disable=not-context-manager
     axa_df = axa_df.to_pandas_df()
 
 # save files to disk
-axa_df.to_feather(output_dir / "axa_icd10.feather")
+axa_df.to_feather(output_dir / "axa_cpt.feather")

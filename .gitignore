@@ -153,6 +153,7 @@ files/data/mimiciv_icd10/mimiciv_icd10.feather
 files/data/mimiciv_icd9/mimiciv_icd9.feather
 files/data/axa_icd10/axa_icd10.feather
 files/data/mimic_axa/mimic_axa_icd10.feather
+files/data/axa_cpt/axa_cpt.feather
 
 #checkpoints
 files/mimiciv_icd10/config.yaml
