@@ -28,6 +28,7 @@ DATA_DIRECTORY_MIMICIV_ICD10 = OmegaConf.load("configs/data/mimiciv_icd10.yaml")
 DATA_DIRECTORY_AXA_ICD10 = OmegaConf.load("configs/data/axa_icd10.yaml").dir
 DATA_DIRECTORY_AXA_CPT = OmegaConf.load("configs/data/axa_cpt.yaml").dir
 DATA_DIRECTORY_MIMIC_AXA_ICD10 = OmegaConf.load("configs/data/mimic_axa_icd10.yaml").dir
+DATA_DIRECTORY_MIMIC_AXA_CPT = OmegaConf.load("configs/data/mimic_axa_cpt.yaml").dir
 
 
 PROJECT = "<your project name>"  # this variable is used for genersating plots and tables from wandb

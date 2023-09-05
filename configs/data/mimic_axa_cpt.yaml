@@ -2,7 +2,7 @@ defaults:
   - defaults
 dir: files/data/mimic_axa_cpt
 data_filename: mimic_axa_cpt.feather
-split_filename: mimic_axa_icd10_split.feather
+split_filename: mimic_axa_cpt_split.feather
 code_column_names:
   - cpt
 max_length: 4000
