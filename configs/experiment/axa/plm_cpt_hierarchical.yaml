@@ -21,6 +21,6 @@ optimizer:
 
 trainer:
   threshold_tuning: true
-  epochs: 10
+  epochs: 20
 
 data.max_length: 4000
