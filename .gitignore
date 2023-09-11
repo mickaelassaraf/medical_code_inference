@@ -165,5 +165,5 @@ files/mimiciv_icd10_scratch/best_model.pt
 
 files/mimic_axa
 files/mimic_axa_hierarchical
-files/mimic_axa_cpt_hierarchical_short
+files/mimic_axa_cpt_hierarchical
 files/cpt
